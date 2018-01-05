@@ -1,0 +1,9 @@
+def binarySearch(arr, start, stop, value):
+    mid = int((start + stop) / 2)
+    if(arr[mid] == value):
+        return mid
+    else:
+        if(value < arr[mid]):
+            return binarySearch(arr, start, mid, value)
+        else:
+            return binarySearch(arr, mid, stop, value)
