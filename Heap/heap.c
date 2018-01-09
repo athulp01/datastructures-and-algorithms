@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include<stdbool.h>
 
+#define HEAP_SIZE 10000
+
 void max_heapify(int *heap, int node, int heap_size)
 {
     int right = 2*node+1;
@@ -40,9 +42,11 @@ void build_max_heap(int heap[], int heap_size)
 
 int main()
 {
-   int heap[10] = {1 ,2, 3, 4, 5, 6, 7, 8, 9, 10};
-   build_max_heap(heap, 10);
-   for(int i=0; i< 10; i++)
+   int heap[HEAP_SIZE];
+    for (int i = 0; i < HEAP_SIZE; i++) 
+        heap[i] = rand()%100;
+   build_max_heap(heap, HEAP_SIZE);
+   for(int i=0; i< HEAP_SIZE; i++)
    {
        printf("%d ", heap[i]);
    }
