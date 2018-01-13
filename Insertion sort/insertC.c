@@ -1,6 +1,6 @@
 #include<stdlib.h>
 #include <stdio.h>
-#define SIZE 50000
+#define SIZE 500000
 
 void insertionSort(int arr[])
 {
@@ -21,7 +21,7 @@ int main()
 {
     int array[SIZE];
     for (int i = 0; i < SIZE; i++) 
-        array[i] = rand()%100;
+        array[i] = rand()%1000;
     insertionSort(array);
 
     
