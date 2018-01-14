@@ -18,21 +18,15 @@ struct node* create_node(struct node* parent)
 };
 void insert(struct node* root, int key)
 {
-    if(root->parent == NULL)
+    if(root->left_child == NULL && (key < root->key))
     {
-        root->key = key;
-        return;
-    }
-    else
-    if(root->left_child == NULL && key < root->key)
-    {
-        struct node* temp = create_node(root);
+        struct node *temp = create_node(root);
         root->left_child = temp;
         temp->key = key;
         return;
     }
     else
-    if(root->right_child == NULL && key > root->key)
+    if(root->right_child == NULL && (key > root->key))
     {
         struct node* temp = create_node(root);
         root->right_child = temp;
@@ -42,21 +36,29 @@ void insert(struct node* root, int key)
     
     
 
-    if(root->left_child!= NULL && key < root->key)
+    if(root->left_child!= NULL && (key < root->key))
         return insert(root->left_child, key);
     else
         return insert(root->right_child, key); 
+}
+
+void print_tree(struct node *root)
+{
+    printf("Right and left of %d are %d and %d viz.\n", root->key,root->right_child->key,root->left_child->key);
+    if(root->right_child->right_child != NULL)
+    print_tree(root->right_child);
+    if(root->left_child->left_child!=NULL)
+    print_tree(root->left_child);
 }
 
 int main()
 {
     struct node tree_root;
     tree_root.parent = NULL;
-    insert(&tree_root, 10);
-    printf("%d", tree_root.key);
-    insert(&tree_root, 20);
-    insert(&tree_root, 8);
-    printf("%d %d", tree_root.left_child->key,tree_root.right_child->key );
+    tree_root.key = 20;
+   for (int i = 1; i < 16; i++) 
+            insert(&tree_root,rand()%100);
+    print_tree(&tree_root);
 }
 
 
