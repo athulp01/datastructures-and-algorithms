@@ -7,7 +7,7 @@ struct node
     int key;
 };
 
-struct node* create_node(struct node* parent)
+struct node* create_node(struct node* parent)   // Creates a node and returns it's pointer
 {
     
     struct node *temp = (struct node*)malloc(sizeof(struct node));
@@ -16,9 +16,10 @@ struct node* create_node(struct node* parent)
     temp->parent = parent;
     return temp;
 };
-void insert(struct node* root, int key)
+
+void insert(struct node* root, int key)        // Insert a key to the given binary tree conforming to it's properties.
 {
-    if(root->left_child == NULL && (key < root->key))
+    if(root->left_child == NULL && (key <= root->key))
     {
         struct node *temp = create_node(root);
         root->left_child = temp;
@@ -26,7 +27,7 @@ void insert(struct node* root, int key)
         return;
     }
     else
-    if(root->right_child == NULL && (key > root->key))
+    if(root->right_child == NULL && (key >= root->key))
     {
         struct node* temp = create_node(root);
         root->right_child = temp;
@@ -42,23 +43,25 @@ void insert(struct node* root, int key)
         return insert(root->right_child, key); 
 }
 
-void print_tree(struct node *root)
+int findMin( struct node* root)
 {
-    printf("Right and left of %d are %d and %d viz.\n", root->key,root->right_child->key,root->left_child->key);
-    if(root->right_child->right_child != NULL)
-    print_tree(root->right_child);
-    if(root->left_child->left_child!=NULL)
-    print_tree(root->left_child);
+    if(root->left_child == NULL)
+        return root->key;
+    else
+        findMin(root->left_child);
 }
+
 
 int main()
 {
     struct node tree_root;
     tree_root.parent = NULL;
     tree_root.key = 20;
-   for (int i = 1; i < 16; i++) 
-            insert(&tree_root,rand()%100);
-    print_tree(&tree_root);
+   for (int i = 1; i < 6000000; i++) 
+            insert(&tree_root,rand()%10000);
+
+    int k = findMin(&tree_root);
+    printf("Minumum is %d\n",k );
 }
 
 
