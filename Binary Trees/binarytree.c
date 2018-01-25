@@ -43,7 +43,7 @@ void insert(struct node* root, int key)        // Insert a key to the given bina
         return insert(root->right_child, key); 
 }
 
-int findMin( struct node* root)
+int findMin( struct node* root)         //Will return the minimum value (does not delete that node)
 {
     if(root->left_child == NULL)
         return root->key;
@@ -51,15 +51,25 @@ int findMin( struct node* root)
         findMin(root->left_child);
 }
 
+void deleteNode( struct node* n)
+{
 
+}
 int main()
 {
+    FILE *data;
+    data = fopen("/home/athulp/datastructures-and-algorithms/data","r+");
     struct node tree_root;
     tree_root.parent = NULL;
     tree_root.key = 20;
-   for (int i = 1; i < 6000000; i++) 
-            insert(&tree_root,rand()%10000);
+    while (!feof (data))
+    {  
+      int num;
+      fscanf (data, "%d ", &num);
+      insert(&tree_root,num);      
+    }
 
+    fclose(data);
     int k = findMin(&tree_root);
     printf("Minumum is %d\n",k );
 }

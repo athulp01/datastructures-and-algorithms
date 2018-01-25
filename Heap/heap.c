@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include <time.h>
 
-int heap_size = 500000;
+int heap_size = 100000;
 
 void swap(int *first, int *second)
 {
@@ -49,11 +49,18 @@ int find_maximum(int heap[])
 int main()
 {
     srand(time(NULL));
-   int heap[heap_size];
-   for (int i = 0; i < heap_size; i++) 
-        heap[i]= rand()%10000;
-   build_max_heap(heap);
-   printf("Maximum is %d", find_maximum(heap));
+    int heap[heap_size];
+    FILE *data;
+    data = fopen("/home/athulp/datastructures-and-algorithms/data","r+");
+    int i=0;
+    while (!feof (data)&& i<heap_size)
+    {  
+      fscanf (data, "%d ", &heap[i]); 
+      i++;
+    }
+    fclose(data);
+    build_max_heap(heap);
+    printf("Maximum is %d", find_maximum(heap));
 }  
     
   
