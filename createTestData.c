@@ -13,7 +13,6 @@ int main(int argc, char const *argv[])
 	{
 		fprintf(data,"%d ",rand()%100000 );
 	}
-	int num=0;
 	fclose(data);
 	return 0;
 }

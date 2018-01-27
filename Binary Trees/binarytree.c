@@ -57,11 +57,11 @@ void deleteNode( struct node* n)
 }
 int main()
 {
-    FILE *data;
-    data = fopen("/home/athulp/datastructures-and-algorithms/data","r+");
     struct node tree_root;
     tree_root.parent = NULL;
     tree_root.key = 20;
+    FILE *data;
+    data = fopen("/home/athulp/datastructures-and-algorithms/data","r+");
     while (!feof (data))
     {  
       int num;
