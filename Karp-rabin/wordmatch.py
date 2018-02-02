@@ -1,31 +1,35 @@
-def dec(ch):
-    return ord(ch) - ord('a') + 1
+
+
+def hash(num):
+    return num % 500069
 
 
 class RollingHash():
     def __init__(self, word, length):
         self.hash = 0
+        self.sum = 0
         self.length = length
-        print(self.length)
-        print(word[0:length])
+        self.salt = 0
+        self.magic = hash(256**self.length)
         for i in range(0, length):
-            self.hash += dec(word[i]) * 26 ** (length - 1 - i)
+            self.sum += ord(word[i]) * 256 ** (length - 1 - i)
+        self.hash = hash(self.sum)
 
     def moveWindow(self, new, old):
-        self.hash = (self.hash * 26) - (dec(old) *
-                                        (26 ** (self.length))) + dec(new)
+        self.hash = hash((self.hash * 256) -
+                         (ord(old) * self.magic) + ord(new))
 
 
-test = "ahello iam athul"
-word = "hello"
+file = open("karp-test.txt", "r")
+test = file.read()
+#test = "test policy fj policy.dshfjkshfkj h h fh"
+word = "checksum"
 
 wordR = RollingHash(word, len(word))
 testR = RollingHash(test[0:len(word)], len(word))
 
 for i in range(0, len(test) - len(word)):
-    print(wordR.hash, testR.hash)
     if(wordR.hash == testR.hash):
-        print("Found at ", i)
-        break
-    print(test[i + len(word)], test[i])
+        if(test[i:i + len(word)] == word):
+            print("Found at ", i)
     testR.moveWindow(test[i + len(word)], test[i])
