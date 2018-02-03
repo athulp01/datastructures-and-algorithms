@@ -17,7 +17,7 @@ public:
 	vector<Vertex*> neighbours;
 	int level = 0;
 	char value;
-
+	Vertex* parent;
 	/*void add_neighbour(char node)
 	{
 		neighbours.push_back(&Vertex(node));
@@ -48,24 +48,25 @@ void bfs(Vertex v)
 	vector<Vertex> visited;
 	visited.push_back(v);
 	int l = 1;
-	queue<Vertex> frontier;
-	frontier.push(v);
+	queue<Vertex*> frontier;
+	frontier.push(&v);
 	while(!frontier.empty())
 	{
 		
-		queue<Vertex> next;
+		queue<Vertex*> next;
 		while(!frontier.empty())
 		{
-			Vertex i = frontier.front();
+			Vertex* i = frontier.front();
 			frontier.pop();
 			vector<Vertex*>::iterator node;
-			for(node = i.neighbours.begin(); node != i.neighbours.end();node++)
+			for(node = i->neighbours.begin(); node != i->neighbours.end();node++)
 			{
 				Vertex* k = *node;
 				if( !(find(visited.begin(),visited.end(),**node) != visited.end()) )
 				{
-					level[k->value] = l;
-					next.push(**node);
+					k->level = l;
+					k->parent = i;
+					next.push(*node);
 					visited.push_back(**node);
 				}
 				
@@ -76,11 +77,22 @@ void bfs(Vertex v)
 		l++;
 	}
 	
-	for(map<char, int> :: iterator i = level.begin(); i != level.end(); i++)
+	/*for(map<char, int> :: iterator i = level.begin(); i != level.end(); i++)
 	{
 		cout<<i->first<<" "<<i->second<<endl;
-	}
+	}*/
 
+}
+
+void shortest_path(Vertex *source, Vertex *destination)
+{
+	if(!(*source == *destination))
+	{
+		printf("%c->",source->value );
+		shortest_path(source->parent, destination);
+	}
+	else
+		printf("%c\n", destination->value);
 }
 int main()
 {
@@ -94,5 +106,6 @@ int main()
 	vertex[6].add_neighbour(&vertex[5]);vertex[6].add_neighbour(&vertex[7]);
 	vertex[7].add_neighbour(&vertex[3]);vertex[7].add_neighbour(&vertex[4]);vertex[7].add_neighbour(&vertex[5]);vertex[7].add_neighbour(&vertex[6]);
 	bfs(vertex[2]);
-	//printf("%d %d %d",vertex[0].neighbours[0].level, vertex[0].neighbours[1].level, vertex[0].neighbours[2].level);
+	cout<<"\nShortest path is ";
+	shortest_path(&vertex[6], &vertex[2]);
 }
