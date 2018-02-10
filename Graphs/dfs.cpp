@@ -39,12 +39,12 @@ public:
 
 void dfs_visit(Vertex *v)
 {
-  cout<<"hi";
   for(auto i = v->neighbours.begin(); i != v->neighbours.end();i++)
   {
     Vertex* k = *i;
-    if(k->parent != NULL)
+    if(k->parent == NULL)
     {
+      cout<<"visited "<<k->value<<endl;
       k->parent = v;
       dfs_visit(k);
     }
@@ -56,7 +56,8 @@ void dfs(Vertex *graph, int size)
 
   for(int i = 0;i<size; i++)
   {
-    dfs_visit(&graph[i]);
+  	cout<<"source vertex "<<(graph+i)->value<<endl;
+    dfs_visit(graph + i);
   }
 }
 int main()
